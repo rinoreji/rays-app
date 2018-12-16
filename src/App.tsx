@@ -11,12 +11,13 @@ interface IAppState {
   filterText?: string;
   record?: Record;
 }
-declare var $:any;
+declare var $: any;
 
 @observer
 class App extends Component<any, IAppState> {
 
-  private _record:Record;
+  private _record: Record;
+  private _recordToEdit:Record;
 
   constructor(props: any) {
     super(props);
@@ -24,23 +25,13 @@ class App extends Component<any, IAppState> {
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    
+    this.handleEdit = this.handleEdit.bind(this);
+
     this.handleAddSubmit = this.handleAddSubmit.bind(this);
 
     this.resetRecord();
   }
 
-  resetRecord =()=>{
-    this._record = new Record();
-
-    this._record.key = "";
-    this._record.category = "";
-    
-    this._record.Field1 = "";
-    this._record.Field2 = "";
-    this._record.Field3 = "";
-    this._record.Field4 = "";
-  }
 
 
   render() {
@@ -63,14 +54,13 @@ class App extends Component<any, IAppState> {
         </nav>
 
         <main role="main" className="container p-2">
-          <div className="card-deck">
-            {RecordStore.Records.map((r, i) => <Card key={r.key} record={r}></Card>)}
+          <div className="card-columns">
+            {RecordStore.Records.map((r, i) => <Card key={r.key} record={r} onEdit={this.handleEdit} ></Card>)}
           </div>
 
-          <div className="modal" id="addModal">
+          <div className="modal fade" id="addModal">
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
-
 
                 <div className="modal-header">
                   <h4 className="modal-title">Add</h4>
@@ -79,7 +69,7 @@ class App extends Component<any, IAppState> {
 
                 <form onSubmit={this.handleAddSubmit}>
                   <div className="modal-body">
-                  <div className="form-group">
+                    <div className="form-group">
                       <label htmlFor="txtCategory">Category</label>
                       <input type="text" className="form-control" readOnly id="txtCategory" name="Category" defaultValue={RecordStore.Category}></input>
                     </div>
@@ -109,6 +99,27 @@ class App extends Component<any, IAppState> {
               </div>
             </div>
           </div>
+
+          <div className="modal fade" id="editModal">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">Update</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  //TODO:...
+                  {/* <CardDetail record={this._recordToEdit}></CardDetail> */}
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" className="btn btn-primary">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     );
@@ -121,13 +132,20 @@ class App extends Component<any, IAppState> {
     }
   }
 
+
+  handleEdit(record: Record){
+    console.log(record);
+    this._recordToEdit = record;
+    $('#editModal').modal('show');
+  }
+
   handleChange(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
 
     this._record[name] = value;
-}
+  }
 
   handleCategoryChange(event: any): void {
     if (event && event.target) {
@@ -136,16 +154,29 @@ class App extends Component<any, IAppState> {
   }
 
   handleAddSubmit(event) {
-    this._record.key ="";
+    this._record.key = "";
     this._record.category = RecordStore.Category;
-    
+
     RecordStore.NewRecord = this._record;
-    
+
     RecordStore.SaveOrUpdateRecord();
     $('#addModal').modal('toggle');
     this.resetRecord();
     event.preventDefault();
-}
+  }
+
+
+  resetRecord = () => {
+    this._record = new Record();
+
+    this._record.key = "";
+    this._record.category = "";
+
+    this._record.Field1 = "";
+    this._record.Field2 = "";
+    this._record.Field3 = "";
+    this._record.Field4 = "";
+  }
 
 }
 

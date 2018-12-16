@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/rays-app/static/js/runtime~main.a7d7e8cf.js"
   },
   {
-    "revision": "96406e60deb0586ff896",
-    "url": "/rays-app/static/js/main.96406e60.chunk.js"
+    "revision": "03705ae33ee4825bca4b",
+    "url": "/rays-app/static/js/main.03705ae3.chunk.js"
   },
   {
     "revision": "af16931dc63661748c7c",
     "url": "/rays-app/static/js/1.af16931d.chunk.js"
   },
   {
-    "revision": "96406e60deb0586ff896",
+    "revision": "03705ae33ee4825bca4b",
     "url": "/rays-app/static/css/main.544523f8.chunk.css"
   },
   {
-    "revision": "2170b3ab54671ff436a62239aebe3f45",
+    "revision": "d485b87c6828770dc557895814b2c71a",
     "url": "/rays-app/index.html"
   }
 ];

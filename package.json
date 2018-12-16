@@ -1,6 +1,6 @@
 {
-  "homepage": "http://rinoreji.github.io/rays",
-  "name": "medical-ref",
+  "homepage": "http://rinoreji.github.io/rays-app",
+  "name": "rays-medical-ref",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
